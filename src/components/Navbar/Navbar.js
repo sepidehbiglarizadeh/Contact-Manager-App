@@ -9,7 +9,7 @@ const items = [
 
 const Navbar = () => {
   return (
-    <nav className="max-w-2xl mx-auto p-5">
+    <nav className=" mx-auto p-5">
       <ul className="list-none flex justify-between items-center ">
         {items.map((item) => {
           return (
