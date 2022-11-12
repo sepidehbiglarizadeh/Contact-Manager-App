@@ -21,7 +21,7 @@ const ContactsList = () => {
     getContacts();
   }, []);
 
-  const deleteContactHandler = async (id) => {
+  const deleteContactHandler2 = async (id) => {
     try {
       await deleteContactService(id);
       const filteredContacts = contacts.filter((contact) => contact.id !== id);
@@ -49,14 +49,11 @@ const ContactsList = () => {
           return (
             <Contact
               key={contact.id}
-              name={contact.name}
-              email={contact.email}
-              phone={contact.phone}
+              contact={contact}
               id={contact.id}
               setActiveContact={setActiveContact}
               activeContact={activeContact}
-              onDelete={deleteContactHandler}
-              contact={contact}
+              onDelete={deleteContactHandler2}
               addFavoutite={addFavoutite}
             />
           );
