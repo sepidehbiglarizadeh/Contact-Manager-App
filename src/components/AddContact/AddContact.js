@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import addNewContactService from "../../services/addNewContactService";
+import updateContactService from "../../services/updateContactService";
 
 const AddContact = () => {
-  const [contact, setContact] = useState({ name: "", email: "", phone: "" });
+  const { state } = useLocation();
+  const [contact, setContact] = useState(
+    state
+      ? { name: state.name, email: state.email, phone: state.phone }
+      : { name: "", email: "", phone: "" }
+  );
 
   const navigate = useNavigate();
 
@@ -20,14 +26,23 @@ const AddContact = () => {
     try {
       await addNewContactService(contact);
       setContact({ name: "", email: "", phone: "" });
-      navigate("/")
+      navigate("/");
+    } catch (error) {}
+  };
+
+  const editContactHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await updateContactService(state.id, contact);
+      setContact({ name: "", email: "", phone: "" });
+      navigate("/");
     } catch (error) {}
   };
 
   return (
     <form
       className="w-[80%] md:w-[70%] mx-auto mt-5"
-      onSubmit={submitFormHandler}
+      onSubmit={state ? editContactHandler : submitFormHandler}
     >
       <div className="mb-4">
         <label htmlFor="name" className="block mb-1">
@@ -69,7 +84,7 @@ const AddContact = () => {
         />
       </div>
       <button className="w-full bg-indigo-400 text-white font-bold p-2 rounded-md mt-4">
-        Add New Contact
+        {state ? "Edit Contact" : "Add New Contact"}
       </button>
     </form>
   );

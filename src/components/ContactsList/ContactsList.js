@@ -43,6 +43,7 @@ const ContactsList = () => {
               setActiveContact={setActiveContact}
               activeContact={activeContact}
               onDelete={deleteContactHandler}
+              contact={contact}
             />
           );
         })

@@ -1,4 +1,5 @@
 import { FaChevronDown, FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Contact = ({
   name,
@@ -8,6 +9,7 @@ const Contact = ({
   setActiveContact,
   activeContact,
   onDelete,
+  contact,
 }) => {
   return (
     <div className="flex items-center mb-3 ">
@@ -36,9 +38,11 @@ const Contact = ({
                 : "h-0 hidden"
             }`}
           >
-            <button className="p-2 text-indigo-400">
-              <FaEdit />
-            </button>
+            <Link to="/new-contact" state={contact}>
+              <button className="p-2 text-indigo-400">
+                <FaEdit />
+              </button>
+            </Link>
             <button className="p-2 text-red-800" onClick={() => onDelete(id)}>
               <FaRegTrashAlt />
             </button>
