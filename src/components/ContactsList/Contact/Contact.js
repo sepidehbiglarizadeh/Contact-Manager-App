@@ -7,6 +7,7 @@ const Contact = ({
   id,
   setActiveContact,
   activeContact,
+  onDelete,
 }) => {
   return (
     <div className="flex items-center mb-3 ">
@@ -30,13 +31,15 @@ const Contact = ({
           </button>
           <div
             className={`flex bg-white rounded-md shadow-md ${
-              activeContact.id ===id && activeContact.boolean ? "h-auto" : "h-0 hidden"
+              activeContact.id === id && activeContact.boolean
+                ? "h-auto"
+                : "h-0 hidden"
             }`}
           >
             <button className="p-2 text-indigo-400">
               <FaEdit />
             </button>
-            <button className="p-2 text-red-800">
+            <button className="p-2 text-red-800" onClick={() => onDelete(id)}>
               <FaRegTrashAlt />
             </button>
           </div>

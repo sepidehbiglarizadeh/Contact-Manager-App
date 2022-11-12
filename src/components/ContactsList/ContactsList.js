@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import deleteContactService from "../../services/deleteContactService";
 import getAllContactsService from "../../services/getAllContactsService";
 import Contact from "./Contact/Contact";
 
 const ContactsList = () => {
   const [contacts, setContacts] = useState(null);
-  const [activeContact, setActiveContact] = useState({id:null,boolean:false});
+  const [activeContact, setActiveContact] = useState({
+    id: null,
+    boolean: false,
+  });
 
   useEffect(() => {
     const getContacts = async () => {
@@ -16,10 +20,18 @@ const ContactsList = () => {
     getContacts();
   }, []);
 
+  const deleteContactHandler = async (id) => {
+    try {
+      await deleteContactService(id);
+      const filteredContacts = contacts.filter((contact) => contact.id !== id);
+      setContacts(filteredContacts);
+    } catch (error) {}
+  };
+
   return (
     <section>
       <h2 className="font-bold text-lg mb-3">All Contacts</h2>
-      {contacts ?
+      {contacts ? (
         contacts.map((contact) => {
           return (
             <Contact
@@ -30,9 +42,13 @@ const ContactsList = () => {
               id={contact.id}
               setActiveContact={setActiveContact}
               activeContact={activeContact}
+              onDelete={deleteContactHandler}
             />
           );
-        }) : <p className="text-center font-bold">Loading...</p>}
+        })
+      ) : (
+        <p className="text-center font-bold">Loading...</p>
+      )}
     </section>
   );
 };
