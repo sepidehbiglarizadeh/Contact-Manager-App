@@ -19,7 +19,7 @@ const ContactsList = () => {
   return (
     <section>
       <h2 className="font-bold text-lg mb-3">All Contacts</h2>
-      {contacts &&
+      {contacts ?
         contacts.map((contact) => {
           return (
             <Contact
@@ -32,7 +32,7 @@ const ContactsList = () => {
               activeContact={activeContact}
             />
           );
-        })}
+        }) : <p className="text-center font-bold">Loading...</p>}
     </section>
   );
 };

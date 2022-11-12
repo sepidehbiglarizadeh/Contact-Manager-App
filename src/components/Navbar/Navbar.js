@@ -1,9 +1,10 @@
-import { FaUsers, FaUserFriends, FaStar } from "react-icons/fa";
+import { FaUsers, FaUserFriends, FaStar,FaPlusCircle } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 const items = [
   {id:1, to: "/", icon: <FaUsers />},
   {id:2, to: "/groups", icon: <FaUserFriends />},
+  {id:4,to:"new-contact",icon:<FaPlusCircle/>},
   {id:3, to: "/favourites", icon: <FaStar />  },
 ];
 
