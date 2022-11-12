@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import deleteContactService from "../../services/deleteContactService";
 import getAllContactsService from "../../services/getAllContactsService";
+import updateContactService from "../../services/updateContactService";
 import Contact from "./Contact/Contact";
 
 const ContactsList = () => {
@@ -28,6 +29,18 @@ const ContactsList = () => {
     } catch (error) {}
   };
 
+  const addFavoutite = async (id) => {
+    const index = contacts.findIndex((item) => item.id === id);
+    const contact = { ...contacts[index] };
+    contact.favourite = !contact.favourite;
+    const updatedContacts = [...contacts];
+    updatedContacts[index] = contact;
+    setContacts(updatedContacts);
+    try {
+      await updateContactService(id, contact);
+    } catch (error) {}
+  };
+
   return (
     <section>
       <h2 className="font-bold text-lg mb-3">All Contacts</h2>
@@ -44,6 +57,7 @@ const ContactsList = () => {
               activeContact={activeContact}
               onDelete={deleteContactHandler}
               contact={contact}
+              addFavoutite={addFavoutite}
             />
           );
         })

@@ -7,8 +7,13 @@ const AddContact = () => {
   const { state } = useLocation();
   const [contact, setContact] = useState(
     state
-      ? { name: state.name, email: state.email, phone: state.phone }
-      : { name: "", email: "", phone: "" }
+      ? {
+          name: state.name,
+          email: state.email,
+          phone: state.phone,
+          favourite: state.favourite,
+        }
+      : { name: "", email: "", phone: "", favourite: false }
   );
 
   const navigate = useNavigate();
@@ -25,7 +30,7 @@ const AddContact = () => {
     e.preventDefault();
     try {
       await addNewContactService(contact);
-      setContact({ name: "", email: "", phone: "" });
+      setContact({ name: "", email: "", phone: "" ,favourite: false });
       navigate("/");
     } catch (error) {}
   };
@@ -34,7 +39,7 @@ const AddContact = () => {
     e.preventDefault();
     try {
       await updateContactService(state.id, contact);
-      setContact({ name: "", email: "", phone: "" });
+      setContact({ name: "", email: "", phone: "" ,favourite: false });
       navigate("/");
     } catch (error) {}
   };

@@ -4,13 +4,15 @@
       "id": 1,
       "name": "cai",
       "email": "cai@gmail.com",
-      "phone": "09121111111"
+      "phone": "09121111111",
+      "favourite": false
     },
     {
       "id": 2,
       "name": "jack",
       "email": "jack@gmail.com",
-      "phone": "09122222222"
+      "phone": "09122222222",
+      "favourite": true
     }
   ]
 }

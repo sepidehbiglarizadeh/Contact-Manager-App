@@ -1,4 +1,10 @@
-import { FaChevronDown, FaEdit, FaRegTrashAlt } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaEdit,
+  FaRegTrashAlt,
+  FaRegStar,
+  FaStar,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Contact = ({
@@ -10,6 +16,7 @@ const Contact = ({
   activeContact,
   onDelete,
   contact,
+  addFavoutite,
 }) => {
   return (
     <div className="flex items-center mb-3 ">
@@ -18,11 +25,17 @@ const Contact = ({
       </div>
       <div className="border-b-2 w-full pb-4 flex justify-between items-center">
         <div>
-          <div className="font-bold uppercase mb-2">{name}</div>
+          <div className="font-bold uppercase mb-2">{name} </div>
           <div>Email : {email}</div>
           <div>Phone Number : {phone}</div>
         </div>
         <div className="flex flex-col justify-center items-center">
+          <button
+            className="mb-3 text-indigo-400 text-xl"
+            onClick={()=>addFavoutite(id)}
+          >
+            {contact.favourite ? <FaStar /> : <FaRegStar />}
+          </button>
           <button
             className="bg-slate-100 p-2 rounded-md text-slate-600 mb-2 shadow-md"
             onClick={() =>
