@@ -12,7 +12,7 @@
       "name": "jack",
       "email": "jack@gmail.com",
       "phone": "09122222222",
-      "favourite": false
+      "favourite": true
     }
   ]
 }
