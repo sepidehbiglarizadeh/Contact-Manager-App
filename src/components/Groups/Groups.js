@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Group from "./Group/Group";
 import GroupsForm from "./GroupsForm/GroupsForm";
 
@@ -6,6 +6,17 @@ const Groups = () => {
   const [formIsShow, setFormIsShow] = useState(false);
   const [formValue, setFormValue] = useState("");
   const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    if (groups.length) {
+      localStorage.setItem("groups", JSON.stringify(groups));
+    }
+  }, [groups]);
+
+  useEffect(() => {
+    const savedGroups = JSON.parse(localStorage.getItem("groups")) || [];
+    setGroups(savedGroups);
+  }, []);
 
   const submitGroupsFormHandler = (e) => {
     e.preventDefault();
