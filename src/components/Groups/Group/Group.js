@@ -4,7 +4,7 @@ import { FaChevronRight } from "react-icons/fa";
 
 const Group = ({group}) => {
   return (
-      <Link>
+      <Link to={`/groups/${group.id}`}>
         <div className="flex justify-between items-center border-b-2 py-4">
           <div className="flex flex-col">
             <span className="font-bold capitalize text-lg">{group.name}</span>

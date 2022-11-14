@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
+import { useGroups, useGroupsActions } from "../Providers/GroupsProvider";
 import Group from "./Group/Group";
 import GroupsForm from "./GroupsForm/GroupsForm";
 
 const Groups = () => {
   const [formIsShow, setFormIsShow] = useState(false);
   const [formValue, setFormValue] = useState("");
-  const [groups, setGroups] = useState([]);
+//   const [groups, setGroups] = useState([]);
+
+const groups= useGroups();
+const setGroups= useGroupsActions();
+
 
   useEffect(() => {
     if (groups.length) {
@@ -44,7 +49,7 @@ const Groups = () => {
         formIsShow={formIsShow}
         submitGroupsFormHandler={submitGroupsFormHandler}
       />
-      {groups.length
+      {groups.length 
         ? groups.map((group) => {
             return <Group key={group.id} group={group} />;
           })
