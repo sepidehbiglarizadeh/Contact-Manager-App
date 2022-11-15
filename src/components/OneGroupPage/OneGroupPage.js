@@ -35,6 +35,16 @@ const OneGroupPage = () => {
     setGroups(updatedGroups);
   };
 
+  const removeMember = (memberId) => {
+    const index = groups.findIndex((item) => item.id === parseInt(id));
+    const group = { ...groups[index] };
+    const selectedContact = contacts.find((c) => c.id === memberId);
+    group.member = group.member.filter((m) => m.id !== memberId);
+    const updatedGroups = [...groups];
+    updatedGroups[index] = group;
+    setGroups(updatedGroups);
+  };
+
   return (
     <section className="relative">
       <div
@@ -52,7 +62,9 @@ const OneGroupPage = () => {
       />
 
       <div className="flex justify-between items-center mb-3">
-        <h2 className="font-bold text-lg mb-3 capitalize">{state.name} group</h2>
+        <h2 className="font-bold text-lg mb-3 capitalize">
+          {state.name} group
+        </h2>
         <button
           className="bg-indigo-400 text-white px-2 py-1 rounded-md shadow-md"
           onClick={() => setModalIsShow((prevState) => !prevState)}
@@ -77,6 +89,12 @@ const OneGroupPage = () => {
                       <div>Email : {member.email}</div>
                       <div>Phone Number : {member.phone}</div>
                     </div>
+                    <button
+                      className="border  border-indigo-400 p-1 rounded-md text-indigo-400 font-bold"
+                      onClick={() => removeMember(member.id)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
               );

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import deleteContactService from "../../services/deleteContactService";
 import getAllContactsService from "../../services/getAllContactsService";
 import updateContactService from "../../services/updateContactService";
-import { useGroups } from "../Providers/GroupsProvider";
 import Contact from "./Contact/Contact";
 
 const ContactsList = () => {
@@ -28,7 +27,6 @@ const ContactsList = () => {
       const filteredContacts = contacts.filter((contact) => contact.id !== id);
       setContacts(filteredContacts);
     } catch (error) {}
-    
   };
 
   const addFavoutite = async (id) => {
