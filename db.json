@@ -13,6 +13,13 @@
       "email": "jack@gmail.com",
       "phone": "09122222222",
       "favourite": true
+    },
+    {
+      "name": "test",
+      "email": "test@gmail.com",
+      "phone": "00000000",
+      "favourite": false,
+      "id": 3
     }
   ]
 }

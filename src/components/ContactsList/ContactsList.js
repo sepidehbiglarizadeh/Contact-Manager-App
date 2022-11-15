@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import deleteContactService from "../../services/deleteContactService";
 import getAllContactsService from "../../services/getAllContactsService";
 import updateContactService from "../../services/updateContactService";
+import { useGroups } from "../Providers/GroupsProvider";
 import Contact from "./Contact/Contact";
 
 const ContactsList = () => {
@@ -21,12 +22,13 @@ const ContactsList = () => {
     getContacts();
   }, []);
 
-  const deleteContactHandler2 = async (id) => {
+  const deleteContactHandler = async (id) => {
     try {
       await deleteContactService(id);
       const filteredContacts = contacts.filter((contact) => contact.id !== id);
       setContacts(filteredContacts);
     } catch (error) {}
+    
   };
 
   const addFavoutite = async (id) => {
@@ -44,23 +46,25 @@ const ContactsList = () => {
   return (
     <section>
       <h2 className="font-bold text-lg mb-3">All Contacts</h2>
-      {contacts ? (
-        contacts.map((contact) => {
-          return (
-            <Contact
-              key={contact.id}
-              contact={contact}
-              id={contact.id}
-              setActiveContact={setActiveContact}
-              activeContact={activeContact}
-              onDelete={deleteContactHandler2}
-              addFavoutite={addFavoutite}
-            />
-          );
-        })
-      ) : (
-        <p className="text-center font-bold">Loading...</p>
-      )}
+      <div className="max-h-[65vh] overflow-auto">
+        {contacts ? (
+          contacts.map((contact) => {
+            return (
+              <Contact
+                key={contact.id}
+                contact={contact}
+                id={contact.id}
+                setActiveContact={setActiveContact}
+                activeContact={activeContact}
+                onDelete={deleteContactHandler}
+                addFavoutite={addFavoutite}
+              />
+            );
+          })
+        ) : (
+          <p className="text-center font-bold">Loading...</p>
+        )}
+      </div>
     </section>
   );
 };

@@ -44,23 +44,25 @@ const Favourites = () => {
   return (
     <section>
       <h2 className="font-bold text-lg mb-3">Favourite Contacts</h2>
-      {contacts.length > 0 ? (
-        contacts.map((contact) => {
-          return (
-            <Contact
-              key={contact.id}
-              contact={contact}
-              id={contact.id}
-              setActiveContact={setActiveContact}
-              activeContact={activeContact}
-              onDelete={deleteContactHandler2}
-              addFavoutite={addFavoutite}
-            />
-          );
-        })
-      ) : (
-        <p className="text-center font-bold">There is no favourite contact</p>
-      )}
+      <div className="max-h-[65vh] overflow-auto">
+        {contacts.length > 0 ? (
+          contacts.map((contact) => {
+            return (
+              <Contact
+                key={contact.id}
+                contact={contact}
+                id={contact.id}
+                setActiveContact={setActiveContact}
+                activeContact={activeContact}
+                onDelete={deleteContactHandler2}
+                addFavoutite={addFavoutite}
+              />
+            );
+          })
+        ) : (
+          <p className="text-center font-bold">There is no favourite contact</p>
+        )}
+      </div>
     </section>
   );
 };

@@ -1,13 +1,19 @@
-import { useParams } from "react-router-dom";
-// import { useGroups, useGroupsActions } from "../Providers/GroupsProvider";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getAllContactsService from "../../services/getAllContactsService";
 import Modal from "./Modal/Modal";
+import { useGroups, useGroupsActions } from "../Providers/GroupsProvider";
 
 const OneGroupPage = () => {
-  const { name } = useParams();
+  const { id } = useParams();
+  const { state } = useLocation();
   const [contacts, setContacts] = useState([]);
   const [modalIsShow, setModalIsShow] = useState(false);
+
+  const groups = useGroups();
+  const setGroups = useGroupsActions();
+  const members = groups.find((g) => parseInt(g.id) === parseInt(id)).member;
+  console.log(members);
 
   useEffect(() => {
     const getContacts = async () => {
@@ -18,6 +24,16 @@ const OneGroupPage = () => {
     };
     getContacts();
   }, []);
+
+  const addMemberHandler = (contactId) => {
+    const index = groups.findIndex((item) => item.id === parseInt(id));
+    const group = { ...groups[index] };
+    const selectedContact = contacts.find((c) => c.id === contactId);
+    group.member.push(selectedContact);
+    const updatedGroups = [...groups];
+    updatedGroups[index] = group;
+    setGroups(updatedGroups);
+  };
 
   return (
     <section className="relative">
@@ -31,16 +47,41 @@ const OneGroupPage = () => {
         contacts={contacts}
         modalIsShow={modalIsShow}
         setModalIsShow={setModalIsShow}
+        addMemberHandler={addMemberHandler}
+        id={id}
       />
 
       <div className="flex justify-between items-center mb-3">
-        <h2 className="font-bold text-lg mb-3 capitalize">{name} group</h2>
+        <h2 className="font-bold text-lg mb-3 capitalize">{state.name} group</h2>
         <button
           className="bg-indigo-400 text-white px-2 py-1 rounded-md shadow-md"
           onClick={() => setModalIsShow((prevState) => !prevState)}
         >
           Add New Member
         </button>
+      </div>
+
+      <div className="max-h-[65vh] overflow-auto">
+        {members
+          ? members.map((member) => {
+              return (
+                <div key={member.id} className="flex items-center mb-3 ">
+                  <div className="bg-indigo-100 w-14 h-14 rounded-full flex justify-center items-center mr-2 uppercase font-bold text-slate-600 text-2xl">
+                    {member.name.substr(0, 1)}
+                  </div>
+                  <div className="border-b-2 w-full pb-4 flex justify-between items-center">
+                    <div>
+                      <div className="font-bold uppercase mb-2">
+                        {member.name}{" "}
+                      </div>
+                      <div>Email : {member.email}</div>
+                      <div>Phone Number : {member.phone}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          : ""}
       </div>
     </section>
   );

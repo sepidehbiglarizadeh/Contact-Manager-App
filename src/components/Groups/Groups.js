@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGroups, useGroupsActions } from "../Providers/GroupsProvider";
 import Group from "./Group/Group";
 import GroupsForm from "./GroupsForm/GroupsForm";
@@ -6,22 +6,9 @@ import GroupsForm from "./GroupsForm/GroupsForm";
 const Groups = () => {
   const [formIsShow, setFormIsShow] = useState(false);
   const [formValue, setFormValue] = useState("");
-//   const [groups, setGroups] = useState([]);
 
-const groups= useGroups();
-const setGroups= useGroupsActions();
-
-
-  useEffect(() => {
-    if (groups.length) {
-      localStorage.setItem("groups", JSON.stringify(groups));
-    }
-  }, [groups]);
-
-  useEffect(() => {
-    const savedGroups = JSON.parse(localStorage.getItem("groups")) || [];
-    setGroups(savedGroups);
-  }, []);
+  const groups = useGroups();
+  const setGroups = useGroupsActions();
 
   const submitGroupsFormHandler = (e) => {
     e.preventDefault();
@@ -49,11 +36,13 @@ const setGroups= useGroupsActions();
         formIsShow={formIsShow}
         submitGroupsFormHandler={submitGroupsFormHandler}
       />
-      {groups.length 
-        ? groups.map((group) => {
-            return <Group key={group.id} group={group} />;
-          })
-        : ""}
+      {groups ? (
+        groups.map((group) => {
+          return <Group key={group.id} group={group} />;
+        })
+      ) : (
+        <p>Add Some Groups</p>
+      )}
     </section>
   );
 };

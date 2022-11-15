@@ -1,10 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const GroupsContext = React.createContext();
 const GroupsContextDispatcher = React.createContext();
 
-const GroupsProvider = ({children}) => {
-  const [groups, setGroups] = useState([]);
+const GroupsProvider = ({ children }) => {
+  const [groups, setGroups] = useState(null);
+
+  useEffect(() => {
+    if (groups) {
+      localStorage.setItem("groups", JSON.stringify(groups));
+    }
+  }, [groups]);
+
+  useEffect(() => {
+    const savedGroups = JSON.parse(localStorage.getItem("groups")) || [];
+    setGroups(savedGroups);
+  }, []);
 
   return (
     <GroupsContext.Provider value={groups}>

@@ -6,7 +6,7 @@ import OneGroupPage from "./components/OneGroupPage/OneGroupPage";
 
 const routes = [
   { path: "/", element: <ContactsList /> },
-  {path:"/groups/:name",element:<OneGroupPage/>},
+  {path:"/groups/:id",element:<OneGroupPage/>},
   { path: "/groups", element: <Groups /> },
   { path: "/favourites", element: <Favourites /> },
   { path: "/new-contact", element: <AddContact /> },
