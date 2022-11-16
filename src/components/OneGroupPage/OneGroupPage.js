@@ -24,9 +24,10 @@ const OneGroupPage = () => {
     getContacts();
 
     const savedGroups = JSON.parse(localStorage.getItem("groups"));
-    const membersOfGroup = savedGroups.find((g) => g.id === parseInt(id)).member;
+    const membersOfGroup = savedGroups.find(
+      (g) => g.id === parseInt(id)
+    ).member;
     setMembers(membersOfGroup);
-    
   }, []);
 
   const addMemberHandler = (contactId) => {
@@ -39,7 +40,6 @@ const OneGroupPage = () => {
     setGroups(updatedGroups);
     const membersOfGroup = groups.find((g) => g.id === parseInt(id)).member;
     setMembers(membersOfGroup);
-    
   };
 
   const removeMember = (memberId) => {
@@ -68,6 +68,7 @@ const OneGroupPage = () => {
         addMemberHandler={addMemberHandler}
         removeMember={removeMember}
         id={id}
+        members={members}
       />
 
       <div className="flex justify-between items-center mb-3">

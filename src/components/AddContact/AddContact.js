@@ -30,7 +30,7 @@ const AddContact = () => {
     e.preventDefault();
     try {
       await addNewContactService(contact);
-      setContact({ name: "", email: "", phone: "" ,favourite: false });
+      setContact({ name: "", email: "", phone: "", favourite: false });
       navigate("/");
     } catch (error) {}
   };
@@ -39,7 +39,7 @@ const AddContact = () => {
     e.preventDefault();
     try {
       await updateContactService(state.id, contact);
-      setContact({ name: "", email: "", phone: "" ,favourite: false });
+      setContact({ name: "", email: "", phone: "", favourite: false });
       navigate("/");
     } catch (error) {}
   };
