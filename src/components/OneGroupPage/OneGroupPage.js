@@ -9,11 +9,10 @@ const OneGroupPage = () => {
   const { state } = useLocation();
   const [contacts, setContacts] = useState([]);
   const [modalIsShow, setModalIsShow] = useState(false);
+  const [members, setMembers] = useState([]);
 
   const groups = useGroups();
   const setGroups = useGroupsActions();
-  const members = groups.find((g) => parseInt(g.id) === parseInt(id)).member;
-  console.log(members);
 
   useEffect(() => {
     const getContacts = async () => {
@@ -23,7 +22,16 @@ const OneGroupPage = () => {
       } catch (error) {}
     };
     getContacts();
+
+    const savedMembers = JSON.parse(localStorage.getItem("members")) || [];
+    setMembers(savedMembers);
   }, []);
+
+  useEffect(() => {
+    if (members.length > 0) {
+      localStorage.setItem("members", JSON.stringify(members));
+    }
+  }, [members]);
 
   const addMemberHandler = (contactId) => {
     const index = groups.findIndex((item) => item.id === parseInt(id));
@@ -33,16 +41,19 @@ const OneGroupPage = () => {
     const updatedGroups = [...groups];
     updatedGroups[index] = group;
     setGroups(updatedGroups);
+    setMembers(group.member);
   };
 
   const removeMember = (memberId) => {
     const index = groups.findIndex((item) => item.id === parseInt(id));
     const group = { ...groups[index] };
-    const selectedContact = contacts.find((c) => c.id === memberId);
     group.member = group.member.filter((m) => m.id !== memberId);
     const updatedGroups = [...groups];
     updatedGroups[index] = group;
     setGroups(updatedGroups);
+    const filteredMembers= members.filter((m)=>m.id !== memberId);
+    setMembers(filteredMembers);
+    localStorage.removeItem("members")
   };
 
   return (

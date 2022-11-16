@@ -4,10 +4,10 @@ const GroupsContext = React.createContext();
 const GroupsContextDispatcher = React.createContext();
 
 const GroupsProvider = ({ children }) => {
-  const [groups, setGroups] = useState(null);
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    if (groups) {
+    if (groups.length > 0) {
       localStorage.setItem("groups", JSON.stringify(groups));
     }
   }, [groups]);
