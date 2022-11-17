@@ -6,20 +6,34 @@ import Contact from "./Contact/Contact";
 
 const ContactsList = () => {
   const [contacts, setContacts] = useState(null);
+  const [allContacts, setAllContacts] = useState(null);
   const [activeContact, setActiveContact] = useState({
     id: null,
     boolean: false,
   });
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const getContacts = async () => {
       try {
         const { data } = await getAllContactsService();
         setContacts(data);
+        setAllContacts(data);
       } catch (error) {}
     };
     getContacts();
   }, []);
+
+  const searchHandler = (e) => {
+    setSearchTerm(e.target.value);
+    const filteredContacts = allContacts.filter((c) => {
+      return Object.values(c)
+        .join(" ")
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+    });
+    setContacts(filteredContacts);
+  };
 
   const deleteContactHandler = async (id) => {
     try {
@@ -43,6 +57,13 @@ const ContactsList = () => {
 
   return (
     <section>
+      <input
+        type="search"
+        placeholder="Search ..."
+        className="w-full rounded-md p-2 shadow-sm outline-none focus:ring-2 focus:ring-indigo-400 mb-4"
+        value={searchTerm}
+        onChange={searchHandler}
+      />
       <h2 className="font-bold text-lg mb-3">All Contacts</h2>
       <div className="max-h-[65vh] overflow-auto">
         {contacts ? (
